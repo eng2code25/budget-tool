@@ -1,6 +1,11 @@
+import { useState } from "react";
 import "./App.css";
 
 function App() {
+  const [transactionInput, setTransactionInput] = useState();
+  const [amountInput, setAmountInput] = useState();
+  const [allTransactions, setAllTransactions] = useState([]);
+
   return (
     <section>
       <div className="header">
@@ -17,14 +22,33 @@ function App() {
       <form className="input-form">
         <div>
           <label>Transaction:</label>
-          <input placeholder="Enter transaction here..." type="text"></input>
+          <input
+            placeholder="Enter transaction here..."
+            type="text"
+            value={transactionInput}
+            onChange={(e) => setTransactionInput(e.target.value)}
+          ></input>
         </div>
         <div className="amount-container">
           <label>Amount:</label>
-          <input placeholder="Enter amount here..." type="number"></input>
+          <input
+            placeholder="Enter amount here..."
+            type="number"
+            value={amountInput}
+            onChange={(e) => setAmountInput(e.target.value)}
+          ></input>
         </div>
         <div className="transaction-button">
-          <button type="submit">Enter transaction</button>
+          <button
+            type="submit"
+            onClick={(e) => {
+              e.preventDefault();
+              setTransactionInput("");
+              setAmountInput("");
+            }}
+          >
+            Enter transaction
+          </button>
         </div>
       </form>
       <div>
@@ -32,11 +56,13 @@ function App() {
         <div>
           {/*Dummy transaction to simulate the outline*/}
           <ul className="transaction-list">
-            <li className="transaction-item">
-              <span>Coffee</span>
-              <span>$5.00</span>
-              <button className="delete-btn">Delete</button>
-            </li>
+            {amountInput.map((amount, index) => (
+              <li className="transaction-item" key={index}>
+                <span>Coffee</span>
+                <span>{amount}</span>
+                <button className="delete-btn">Delete</button>
+              </li>
+            ))}
           </ul>
         </div>
         <h3>Total sum of Expenses:</h3>
