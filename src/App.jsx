@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
   const [transactionInput, setTransactionInput] = useState("");
   const [amountInput, setAmountInput] = useState("");
-  const [allTransactions, setAllTransactions] = useState([]);
+  const [allTransactions, setAllTransactions] = useState(() => {
+    const saved = localStorage.getItem("budget-app");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const deleteTransaction = (deleteIndex) => {
+    const updateTransaction = allTransactions.filter(
+      (_, index) => index !== deleteIndex,
+    );
+    setAllTransactions(updateTransaction);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("budget-app", JSON.stringify(allTransactions));
+  }, [allTransactions]);
 
   return (
     <section>
@@ -64,7 +78,13 @@ function App() {
               <li className="transaction-item" key={index}>
                 <span>{item.name}</span>
                 <span>{item.amount}</span>
-                <button className="delete-btn">Delete</button>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteTransaction(index)}
+                >
+                  Delete
+                </button>
+                <button>Edit</button>
               </li>
             ))}
           </ul>
