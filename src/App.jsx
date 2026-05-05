@@ -2,8 +2,8 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  const [transactionInput, setTransactionInput] = useState();
-  const [amountInput, setAmountInput] = useState();
+  const [transactionInput, setTransactionInput] = useState("");
+  const [amountInput, setAmountInput] = useState("");
   const [allTransactions, setAllTransactions] = useState([]);
 
   return (
@@ -43,6 +43,11 @@ function App() {
             type="submit"
             onClick={(e) => {
               e.preventDefault();
+              const newObject = {
+                name: transactionInput,
+                amount: amountInput,
+              };
+              setAllTransactions([...allTransactions, newObject]);
               setTransactionInput("");
               setAmountInput("");
             }}
@@ -54,12 +59,11 @@ function App() {
       <div>
         <h2 className="transaction-details">Transaction Details</h2>
         <div>
-          {/*Dummy transaction to simulate the outline*/}
           <ul className="transaction-list">
-            {amountInput.map((amount, index) => (
+            {allTransactions.map((item, index) => (
               <li className="transaction-item" key={index}>
-                <span>Coffee</span>
-                <span>{amount}</span>
+                <span>{item.name}</span>
+                <span>{item.amount}</span>
                 <button className="delete-btn">Delete</button>
               </li>
             ))}
