@@ -16,6 +16,23 @@ function App() {
     setAllTransactions(updateTransaction);
   };
 
+  const editTransaction = (editIndex) => {
+    if (amountInput.trim() !== "") {
+      alert("Please save your transactions!");
+      return;
+    }
+
+    if (transactionInput.trim() !== "") {
+      alert("Please save your transactions!");
+      return;
+    }
+
+    const savedTransaction = allTransactions[editIndex];
+    setTransactionInput(savedTransaction.name);
+    setAmountInput(savedTransaction.amount);
+    deleteTransaction(editIndex);
+  };
+
   useEffect(() => {
     localStorage.setItem("budget-app", JSON.stringify(allTransactions));
   }, [allTransactions]);
@@ -57,6 +74,12 @@ function App() {
             type="submit"
             onClick={(e) => {
               e.preventDefault();
+
+              if (transactionInput.trim() == "" || amountInput == "") {
+                alert("Please fill out the inputs before saving!");
+                return;
+              }
+
               const newObject = {
                 name: transactionInput,
                 amount: amountInput,
@@ -84,7 +107,14 @@ function App() {
                 >
                   Delete
                 </button>
-                <button>Edit</button>
+                <button
+                  className="edit-btn"
+                  onClick={() => {
+                    editTransaction(index);
+                  }}
+                >
+                  Edit
+                </button>
               </li>
             ))}
           </ul>
