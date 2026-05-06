@@ -8,6 +8,7 @@ function App() {
     const saved = localStorage.getItem("budget-app");
     return saved ? JSON.parse(saved) : [];
   });
+  const [typeInput, setTypeInput] = useState("Expenses");
 
   const deleteTransaction = (deleteIndex) => {
     const updateTransaction = allTransactions.filter(
@@ -30,6 +31,7 @@ function App() {
     const savedTransaction = allTransactions[editIndex];
     setTransactionInput(savedTransaction.name);
     setAmountInput(savedTransaction.amount);
+    setTypeInput(savedTransaction.type);
     deleteTransaction(editIndex);
   };
 
@@ -59,6 +61,13 @@ function App() {
             value={transactionInput}
             onChange={(e) => setTransactionInput(e.target.value)}
           ></input>
+          <select
+            value={typeInput}
+            onChange={(e) => setTypeInput(e.target.value)}
+          >
+            <option value="Expense">Expenses</option>
+            <option value="Income">Income</option>
+          </select>
         </div>
         <div className="amount-container">
           <label>Amount:</label>
@@ -83,6 +92,7 @@ function App() {
               const newObject = {
                 name: transactionInput,
                 amount: amountInput,
+                type: typeInput,
               };
               setAllTransactions([...allTransactions, newObject]);
               setTransactionInput("");
@@ -101,6 +111,7 @@ function App() {
               <li className="transaction-item" key={index}>
                 <span>{item.name}</span>
                 <span>{item.amount}</span>
+                <span>{item.type}</span>
                 <button
                   className="delete-btn"
                   onClick={() => deleteTransaction(index)}
