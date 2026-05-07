@@ -39,6 +39,19 @@ function App() {
     localStorage.setItem("budget-app", JSON.stringify(allTransactions));
   }, [allTransactions]);
 
+  {
+    /*Math section*/
+  }
+  const totalExpenses = allTransactions
+    .filter((item) => item.type === "Expenses")
+    .reduce((acc, item) => acc + Number(item.amount), 0);
+
+  const totalIncome = allTransactions
+    .filter((item) => item.type === "Income")
+    .reduce((acc, item) => acc + Number(item.amount), 0);
+
+  const balance = totalIncome - totalExpenses;
+
   return (
     <section>
       <div className="header">
@@ -46,10 +59,10 @@ function App() {
       </div>
       <div className="summary">
         <div className="balance-card">
-          <h2>Total income:</h2>
+          <h2>Total income: ${totalIncome}</h2>
         </div>
         <div className="balance-card">
-          <h2>Total Expenses:</h2>
+          <h2>Total Expenses: ${totalExpenses}</h2>
         </div>
       </div>
       <form className="input-form">
@@ -130,7 +143,6 @@ function App() {
             ))}
           </ul>
         </div>
-        <h3>Total sum of Expenses:</h3>
       </div>
     </section>
   );
