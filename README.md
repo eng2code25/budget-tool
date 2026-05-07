@@ -1,4 +1,6 @@
 ## Monthly Budget Tracker (React)
+
+## What it is
 A simple budget tracking app built with React.
 This project focuses on handling user input, managing transaction data, and updating the UI dynamically.
 
@@ -8,17 +10,13 @@ This project focuses on handling user input, managing transaction data, and upda
 - Delete individual transactions
 - Calculate total income and total expenses
 
-## What I will do
+## Live link
+- https://budget-tool-beta.vercel.app/
+
+## What I learned
 - Handling form input in React
 - Managing state for dynamic data (transactions)
 - Rendering lists using .map()
 - Basic CRUD operations (create, delete)
 - Performing calculations from stored data
 
-## Current Status
-- Basic UI structure completed.
-
-Working on implementing:
-- State management for transactions
-- Calculation logic for totals
-- Delete functionality
